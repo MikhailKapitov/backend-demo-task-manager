@@ -1,0 +1,29 @@
+cURL templates (No authorisation):
+
+	curl -X GET "http://localhost:8081/api/tasks"
+
+	curl -X GET "http://localhost:8081/api/tasks/{id}"
+
+	curl -X GET "http://localhost:8081/api/tasks/get-specific?userId={userId}&status={status}"
+
+	curl -X GET "http://localhost:8081/api/tasks/get-specific?userId={userId}"
+
+	curl -X POST "http://localhost:8081/api/tasks" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": {title},
+           "description": {description},
+           "status": {status},
+           "userId": {userId}
+         }'
+
+	curl -X PUT "http://localhost:8081/api/tasks/{id}" \
+	-H "Content-Type: application/json" \
+	-d '{
+	   "title": {title},
+	   "description": {description},
+	   "status": {status},
+	   "userId": {userId}
+	 }'
+
+    curl -X DELETE "http://localhost:8081/api/tasks/{id}"
