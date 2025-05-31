@@ -110,6 +110,10 @@ def verify_token():
             payload = jwt.decode(token, REFRESH_TOKEN_SECRET, algorithms=['HS256'])
             if payload.get('type') != 'refresh':
                 return jsonify({"error": "Invalid token type"}), 401
+
+        current_time = datetime.utcnow()
+        if payload['exp'] < current_time.timestamp():
+            return jsonify({"error": "Token expired"}), 401
         
         if is_token_revoked(payload['jti']):
             return jsonify({"error": "Token revoked"}), 401
