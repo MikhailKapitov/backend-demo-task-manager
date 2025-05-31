@@ -6,6 +6,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from db import db, User
 from eureka_client import init_eureka
+import py_eureka_client.eureka_client as eureka_client
 
 
 app = Flask(__name__)
@@ -25,23 +26,36 @@ def drop_db():
     db.create_all()
 
 def get_jwt_service_url():
-    return eureka_client.get_app_url("jwt-service")
+    
+    client = eureka_client.get_client()
+    app = client.applications.get_application("jwt-service")
+    
+    up_instances = app.up_instances
 
-def create_token(login):
+    
+    if up_instances:
+        instance = up_instances[0]
+        # print(instance.port.port, dir(instance.port.port))
+        app_url = f"http://{instance.ipAddr}:{instance.port.port}"
+        return app_url
+    
+    return None
+
+def create_tokens(login):
 
     # Placeholder for testing.
-    return {"refresh_token": "refresh_token_goes_here", "access_token": "access_token_goes_here"}
+    # return {"refresh_token": "refresh_token_goes_here", "access_token": "access_token_goes_here"}
     
     jwt_url = f"{get_jwt_service_url()}/api/token/create"
     response = requests.post(jwt_url, json={"login": login})
     if response.status_code == 200:
-        return response.json()["token"]
+        return {"access_token": response.json()["access_token"], "refresh_token": response.json()["refresh_token"]}
     return None
 
 def verify_token(token):
 
     # Placeholder for testing.
-    return True
+    # return True
 
     jwt_url = f"{get_jwt_service_url()}/api/token/verify"
     response = requests.post(jwt_url, json={"token": token})
@@ -50,7 +64,7 @@ def verify_token(token):
 def get_token_login(token):
 
     # Placeholder for testing.
-    return "username_goes_here"
+    # return "username_goes_here"
 
     jwt_url = f"{get_jwt_service_url()}/api/token/verify"
     response = requests.post(jwt_url, json={"token": token})
@@ -77,7 +91,7 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     
-    tokens = create_token(data['login'])
+    tokens = create_tokens(data['login'])
     return jsonify({"access_token": tokens["access_token"], "refresh_token": tokens["refresh_token"]}), 201
 
 @app.route('/api/user/login', methods=['POST'])
@@ -95,7 +109,7 @@ def login():
     except VerifyMismatchError:
         return jsonify({"error": "Invalid credentials"}), 401
     
-    tokens = create_token(data['login'])
+    tokens = create_tokens(data['login'])
     return jsonify({"access_token": tokens["access_token"], "refresh_token": tokens["refresh_token"]})
 
 @app.route('/api/user', methods=['DELETE'])

@@ -23,6 +23,8 @@ REFRESH_TOKEN_SECRET = os.getenv('REFRESH_TOKEN_SECRET', 'default-refresh-secret
 ACCESS_TOKEN_EXPIRATION = 900  # 15 minutes.
 REFRESH_TOKEN_EXPIRATION = 1209600  # 14 days.
 
+print(ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET)
+
 def create_jti():
     return str(uuid.uuid4())
 
