@@ -30,9 +30,9 @@ def get_jwt_service_url():
 def create_token(login):
 
     # Placeholder for testing.
-    return "token_goes_here"
+    return {"refresh_token": "refresh_token_goes_here", "access_token": "access_token_goes_here"}
     
-    jwt_url = f"{get_jwt_service_url()}/token/create"
+    jwt_url = f"{get_jwt_service_url()}/api/token/create"
     response = requests.post(jwt_url, json={"login": login})
     if response.status_code == 200:
         return response.json()["token"]
@@ -43,7 +43,7 @@ def verify_token(token):
     # Placeholder for testing.
     return True
 
-    jwt_url = f"{get_jwt_service_url()}/token/verify"
+    jwt_url = f"{get_jwt_service_url()}/api/token/verify"
     response = requests.post(jwt_url, json={"token": token})
     return response.status_code == 200
 
@@ -52,7 +52,7 @@ def get_token_login(token):
     # Placeholder for testing.
     return "username_goes_here"
 
-    jwt_url = f"{get_jwt_service_url()}/token/parse"
+    jwt_url = f"{get_jwt_service_url()}/api/token/parse"
     response = requests.post(jwt_url, json={"token": token})
     if response.status_code != 200:
         return None
@@ -77,8 +77,8 @@ def register():
     db.session.add(new_user)
     db.session.commit()
     
-    token = create_token(data['login'])
-    return jsonify({"token": token}), 201
+    tokens = create_token(data['login'])
+    return jsonify({"access_token": tokens["access_token"], "refresh_token": tokens["refresh_token"]}), 201
 
 @app.route('/api/user/login', methods=['POST'])
 def login():
@@ -95,8 +95,8 @@ def login():
     except VerifyMismatchError:
         return jsonify({"error": "Invalid credentials"}), 401
     
-    token = create_token(data['login'])
-    return jsonify({"token": token})
+    tokens = create_token(data['login'])
+    return jsonify({"access_token": tokens["access_token"], "refresh_token": tokens["refresh_token"]})
 
 @app.route('/api/user', methods=['DELETE'])
 def delete_user():
