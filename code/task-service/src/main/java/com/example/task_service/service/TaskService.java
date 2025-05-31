@@ -30,7 +30,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public List<Task> getTasksByUserIdAndStatus(UUID userId, Integer status) {
+    public List<Task> getTasksByUserIdAndStatus(String userId, Integer status) {
         return taskRepository.findByUserIdAndStatus(userId, status);
     }
 

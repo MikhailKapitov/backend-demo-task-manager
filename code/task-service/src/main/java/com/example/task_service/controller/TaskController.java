@@ -46,7 +46,7 @@ public class TaskController {
 
     @GetMapping("/get-specific")
     public ResponseEntity<List<TaskResponse>> getFilteredTasks(
-        @RequestParam UUID userId,
+        @RequestParam String userId,
         @RequestParam(required = false) Integer status
     ) {
         List<Task> tasks = taskService.getTasksByUserIdAndStatus(userId, status);

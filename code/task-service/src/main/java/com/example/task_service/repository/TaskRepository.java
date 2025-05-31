@@ -10,5 +10,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface TaskRepository extends JpaRepository<Task, UUID> {
 	@Query("SELECT t FROM Task t WHERE t.userId = :userId AND (:status IS NULL OR t.status = :status)")
-    List<Task> findByUserIdAndStatus(@Param("userId") UUID userId, @Param("status") Integer status);
+    List<Task> findByUserIdAndStatus(@Param("userId") String userId, @Param("status") Integer status);
 }

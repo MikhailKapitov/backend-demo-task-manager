@@ -13,6 +13,6 @@ public record TaskResponse(
     Integer status,
     LocalDateTime createdAt,
     LocalDateTime updatedAt,
-    UUID userId
+    String userId
 
 ) {}

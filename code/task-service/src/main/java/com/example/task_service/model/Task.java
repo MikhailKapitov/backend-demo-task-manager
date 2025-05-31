@@ -40,7 +40,7 @@ public class Task {
     private LocalDateTime updatedAt;
 
     @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    private String userId;
 
     @PrePersist
     protected void onCreate() {

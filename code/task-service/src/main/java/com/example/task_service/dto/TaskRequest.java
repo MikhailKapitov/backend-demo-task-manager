@@ -1,6 +1,6 @@
 package com.example.task_service.dto;
 
-import java.util.UUID;
+// import java.util.UUID;
 import java.time.LocalDateTime;
 
 public record TaskRequest(
@@ -10,6 +10,6 @@ public record TaskRequest(
     String title,
     String description,
     Integer status,
-    UUID userId
+    String userId
 
 ) {}
