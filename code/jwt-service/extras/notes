@@ -11,3 +11,7 @@ cURL templates:
     curl -X POST http://localhost:8083/api/token/verify \
         -H "Content-Type: application/json" \
         -d '{"token": {token}}'
+
+Startup templates (Linux Mint):
+
+    export ACCESS_TOKEN_SECRET={secret}; export REFRESH_TOKEN_SECRET={secret}; python3 main.py
