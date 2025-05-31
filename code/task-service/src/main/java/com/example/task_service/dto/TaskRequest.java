@@ -9,7 +9,7 @@ public record TaskRequest(
 
     String title,
     String description,
-    Integer status,
-    String userId
+    Integer status
+    // String userId
 
 ) {}
