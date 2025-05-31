@@ -1,0 +1,5 @@
+Flask
+Flask-SQLAlchemy
+py-eureka-client
+requests
+argon2-cffi

@@ -1,0 +1,12 @@
+cURL templates:
+
+    curl -X POST http://localhost:8082/api/user/register \
+        -H "Content-Type: application/json" \
+        -d '{"login": {login}, "password": {password}}'
+
+    curl -X POST http://localhost:8082/api/user/login \
+        -H "Content-Type: application/json" \
+        -d '{"login": {login}, "password": {password}}'
+
+    curl -X DELETE http://localhost:8082/api/user \
+        -H "Authorization: Bearer {token}"
