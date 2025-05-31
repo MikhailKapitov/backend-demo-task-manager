@@ -52,7 +52,7 @@ def get_token_login(token):
     # Placeholder for testing.
     return "username_goes_here"
 
-    jwt_url = f"{get_jwt_service_url()}/api/token/parse"
+    jwt_url = f"{get_jwt_service_url()}/api/token/verify"
     response = requests.post(jwt_url, json={"token": token})
     if response.status_code != 200:
         return None

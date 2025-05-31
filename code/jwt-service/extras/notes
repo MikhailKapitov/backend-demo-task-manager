@@ -1,0 +1,13 @@
+cURL templates:
+
+    curl -X POST http://localhost:8083/api/token/create \
+        -H "Content-Type: application/json" \
+        -d '{"login": {login}}'
+
+    curl -X POST http://localhost:8083/api/token/refresh \
+        -H "Content-Type: application/json" \
+        -d '{"refresh_token": {refresh_token}}'
+
+    curl -X POST http://localhost:8083/api/token/verify \
+        -H "Content-Type: application/json" \
+        -d '{"token": {token}}'

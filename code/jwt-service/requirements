@@ -1,0 +1,5 @@
+Flask
+Flask-SQLAlchemy
+PyJWT
+py-eureka-client
+python-dotenv
